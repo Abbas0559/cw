@@ -1,20 +1,23 @@
-name: pr-validation
+name: ci-wf
 on: 
-   pull_request:
-     types:
-       - opened
-       - synchronize
-
-   push:
-
-    branches:
-
+  pull_request:
+   branches:
       - develop
+   types: 
+      - opened
+      - synchronize
+  push:
+     branches:
+      -develop
 jobs:
-   pr-validation-job:
+  linting-job:
     runs-on: ubuntu-latest
     steps:
-      - name: welcome steps
-        run: echo "Welcome to GitHub Actions"
-      - name: Second step
-        run: echo "Second step"
+     - name: welcome steps
+       run: echo "CI Pipeline for this Repo"
+     - name: Checkout Repository
+       uses: actions/checkout@4
+     - name: lint HTML Files
+       run : npx htmlhint "**/*.html"
+     - name: Lint CSS Files
+       run: npx stylelint "**/*.css"
